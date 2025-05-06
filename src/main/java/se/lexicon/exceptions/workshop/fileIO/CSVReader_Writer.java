@@ -79,7 +79,11 @@ public class CSVReader_Writer {
                 names = reader.lines()
                         .flatMap(line -> Stream.of(line.split(",")))
                         .collect(Collectors.toList());
-            } finally {
+            }catch (FileNotFoundException e) {
+                System.out.println("File not found, error message: " + e.getMessage());
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }finally {
                 if (reader != null) {
                     reader.close();
                 }
@@ -96,7 +100,7 @@ public class CSVReader_Writer {
                 }
                 writer.flush();
             }catch (IOException e){
-                System.out.println("Something went wrong in last names");
+                System.out.println("Something went wrong when trying to save lastNames");
             }
         }
 
