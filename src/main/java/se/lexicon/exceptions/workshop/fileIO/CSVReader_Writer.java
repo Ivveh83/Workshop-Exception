@@ -79,10 +79,6 @@ public class CSVReader_Writer {
                 names = reader.lines()
                         .flatMap(line -> Stream.of(line.split(",")))
                         .collect(Collectors.toList());
-            }catch (FileNotFoundException e) {
-                System.out.println("File not found, error message: " + e.getMessage());
-            } catch (IOException e) {
-                System.out.println("Something went wrong: " + e.getMessage());
             }finally {
                 if (reader != null) {
                     reader.close();
