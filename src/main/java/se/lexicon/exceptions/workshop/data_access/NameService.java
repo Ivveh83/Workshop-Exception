@@ -5,6 +5,7 @@ import java.util.Random;
 
 import se.lexicon.exceptions.workshop.domain.Gender;
 import se.lexicon.exceptions.workshop.domain.Person;
+import se.lexicon.exceptions.workshop.exceptions.DuplicateNameException;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
 
 public class NameService {
@@ -62,9 +63,18 @@ public class NameService {
 	     * @param name
 	     */
 	    public void addFemaleFirstName(String name){
-	    	femaleFirstNames.add(name);
-	    	CSVReader_Writer.saveFemaleNames(femaleFirstNames);
-	    		
+
+			boolean nameExists = false;
+			for (String s : femaleFirstNames){
+				if (s.equalsIgnoreCase(name)) nameExists = true;
+			}
+			if (!nameExists) {
+				femaleFirstNames.add(name);
+				CSVReader_Writer.saveFemaleNames(femaleFirstNames);
+			}
+			else{
+				throw new DuplicateNameException("Femal first name already exists");
+			}
 	    }
 
 	    /**
@@ -74,9 +84,19 @@ public class NameService {
 	     * @param name
 	     */
 	    public void addMaleFirstName(String name){
-	    	maleFirstNames.add(name);
-	        CSVReader_Writer.saveMaleNames(maleFirstNames);
-	    }
+			boolean nameExists = false;
+			for (String s : maleFirstNames){
+				if (s.equalsIgnoreCase(name)) nameExists = true;
+			}
+			if (!nameExists) {
+				maleFirstNames.add(name);
+				CSVReader_Writer.saveMaleNames(maleFirstNames);
+			}
+			else{
+				throw new DuplicateNameException("Male first name already exists");
+			}
+		}
+
 
 	    /**
 	     * Here you need to check if List<String> lastNames already contains the name
@@ -85,10 +105,16 @@ public class NameService {
 	     * @param lastName
 	     */
 	    public void addLastName(String lastName){
-	    	lastNames.add(lastName);
-	        CSVReader_Writer.saveLastNames(lastNames);
-	    }
-
-
-	
+			boolean nameExists = false;
+			for (String s : lastNames){
+				if (s.equalsIgnoreCase(lastName)) nameExists = true;
+			}
+			if (!nameExists) {
+				lastNames.add(lastName);
+				CSVReader_Writer.saveLastNames(lastNames);
+			}
+			else{
+				throw new DuplicateNameException("Last name already exists");
+			}
+		}
 }
